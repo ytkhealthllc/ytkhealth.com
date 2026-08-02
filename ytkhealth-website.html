@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ytkhealth — Physician Recruitment &amp; Network Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canvas:#F5F1E6;
+    --card:#FFFDF8;
+    --ink:#221F1B;
+    --ink-soft:#5B5450;
+    --rosewood:#2B4234;
+    --rosewood-dark:#1D2E24;
+    --evergreen:#2B4234;
+    --evergreen-dark:#1D2E24;
+    --gold:#B8863B;
+    --gold-light:#D4AF6A;
+    --line:#DCD2C0;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:'Karla',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+
+  a{color:inherit;}
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(246,241,231,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:22px;
+    padding-bottom:22px;
+  }
+  .logo{
+    font-family:'Fraunces',serif;
+    font-size:1.3rem;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  nav ul{
+    display:flex;
+    gap:36px;
+    list-style:none;
+  }
+  nav ul li a{
+    text-decoration:none;
+    font-size:0.95rem;
+    font-weight:500;
+    color:var(--ink-soft);
+    transition:color .2s ease;
+  }
+  nav ul li a:hover{color:var(--rosewood);}
+  .nav-cta{
+    background:var(--evergreen);
+    color:#fff !important;
+    padding:10px 20px;
+    border-radius:999px;
+    font-size:0.9rem;
+    font-weight:600;
+    text-decoration:none;
+    transition:background .2s ease, transform .2s ease;
+  }
+  .nav-cta:hover{background:var(--evergreen-dark);transform:translateY(-1px);}
+  .nav-toggle{display:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:110px 0 96px;
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 700px 420px at 82% 8%, rgba(184,134,59,0.10), transparent 60%),
+      radial-gradient(ellipse 600px 500px at 8% 95%, rgba(43,66,52,0.07), transparent 60%);
+  }
+  .hero-solo{
+    max-width:760px;
+    text-align:left;
+  }
+  .hero h1{
+    font-size:clamp(2.8rem, 5.6vw, 4.6rem);
+    line-height:1.06;
+    margin-bottom:26px;
+  }
+  .hero p.lede{
+    font-size:1.22rem;
+    max-width:52ch;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:0.78rem;
+    font-weight:700;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;
+    height:1.5px;
+    background:var(--gold);
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 4.2vw, 3.6rem);
+    line-height:1.08;
+    margin-bottom:24px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--gold-light);
+  }
+  .hero p.lede{
+    font-size:1.15rem;
+    color:var(--ink-soft);
+    max-width:46ch;
+    margin-bottom:34px;
+  }
+  .btn-row{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--rosewood);
+    color:#fff;
+    padding:15px 28px;
+    border-radius:999px;
+    text-decoration:none;
+    font-weight:600;
+    font-size:0.98rem;
+    display:inline-block;
+    transition:background .2s ease, transform .2s ease;
+    border:none;
+    cursor:pointer;
+  }
+  .btn-primary:hover{background:var(--rosewood-dark);transform:translateY(-2px);}
+  .btn-ghost{
+    color:var(--ink);
+    text-decoration:none;
+    font-weight:600;
+    font-size:0.98rem;
+    border-bottom:1.5px solid var(--ink);
+    padding-bottom:2px;
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{padding:88px 0;}
+  .section-head{
+    max-width:640px;
+    margin-bottom:56px;
+  }
+  .section-eyebrow{
+    font-size:0.78rem;
+    font-weight:700;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--evergreen);
+    margin-bottom:14px;
+    display:block;
+  }
+  .section-head h2{
+    font-size:clamp(1.8rem,3vw,2.4rem);
+    margin-bottom:16px;
+  }
+  .section-head p{
+    color:var(--ink-soft);
+    font-size:1.05rem;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about{
+    background:var(--card);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:88px 0;
+  }
+  .about .wrap{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:64px;
+    align-items:start;
+  }
+  .quote-mark{
+    font-family:'Fraunces',serif;
+    font-size:5rem;
+    color:var(--gold);
+    line-height:1;
+    margin-bottom:8px;
+  }
+  .about-copy p{
+    font-size:1.08rem;
+    color:var(--ink-soft);
+    margin-bottom:20px;
+  }
+  .about-copy p:last-child{margin-bottom:0;}
+  .about-copy strong{color:var(--ink);font-weight:600;}
+  .signature{
+    margin-top:28px;
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:1.2rem;
+    color:var(--ink);
+  }
+  .about-stats{
+    display:flex;
+    flex-direction:column;
+    gap:26px;
+  }
+  .stat{
+    border-left:2px solid var(--gold);
+    padding-left:18px;
+  }
+  .stat b{
+    display:block;
+    font-family:'Fraunces',serif;
+    font-size:1.5rem;
+    font-weight:500;
+    color:var(--evergreen);
+  }
+  .stat span{
+    font-size:0.9rem;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- ABOUT ME (minimal) ---------- */
+  .about-me{
+    text-align:center;
+  }
+  .about-me .wrap{
+    max-width:640px;
+  }
+  .monogram{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    background:var(--evergreen);
+    color:#F5F1E6;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Fraunces',serif;
+    font-size:1.1rem;
+    font-weight:600;
+    margin:0 auto 24px;
+  }
+  .about-me p{
+    font-size:1.1rem;
+    color:var(--ink-soft);
+  }
+  .about-me .signature{
+    justify-content:center;
+    display:flex;
+    margin-top:20px;
+  }
+
+  /* ---------- SERVICES ---------- */
+  .services-list{
+    display:flex;
+    flex-direction:column;
+  }
+  .service-row{
+    display:grid;
+    grid-template-columns:64px 1fr 1.3fr;
+    gap:32px;
+    padding:34px 0;
+    border-top:1px solid var(--line);
+    align-items:start;
+  }
+  .service-row:last-child{border-bottom:1px solid var(--line);}
+  .service-icon{
+    width:48px;height:48px;
+    border-radius:50%;
+    background:var(--card);
+    border:1.5px solid var(--evergreen);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .service-icon svg{width:22px;height:22px;stroke:var(--evergreen);}
+  .service-row h3{
+    font-size:1.25rem;
+    font-weight:500;
+    padding-top:6px;
+  }
+  .service-row p{
+    color:var(--ink-soft);
+    padding-top:6px;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    background:var(--evergreen);
+    color:#F6F1E7;
+    position:relative;
+  }
+  .contact .section-head p{color:#CFE0D5;}
+  .contact .section-eyebrow{color:var(--gold);}
+  .contact h2{color:#fff;}
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:56px;
+    align-items:start;
+  }
+  .contact-info{display:flex;flex-direction:column;gap:22px;}
+  .contact-info a{
+    text-decoration:none;
+    font-weight:600;
+    border-bottom:1.5px solid rgba(255,255,255,0.4);
+    padding-bottom:2px;
+    width:fit-content;
+  }
+  .contact-info .label{
+    font-size:0.8rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:#A9C2B2;
+    margin-bottom:6px;
+  }
+  form{
+    background:var(--card);
+    border-radius:16px;
+    padding:32px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  form label{
+    font-size:0.85rem;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:6px;
+    display:block;
+  }
+  form input, form textarea{
+    width:100%;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    padding:12px 14px;
+    font-family:'Karla',sans-serif;
+    font-size:0.95rem;
+    color:var(--ink);
+    background:#fff;
+    transition:border-color .2s ease;
+  }
+  form input:focus, form textarea:focus{
+    outline:none;
+    border-color:var(--evergreen);
+  }
+  form textarea{resize:vertical;min-height:100px;}
+  .field{display:flex;flex-direction:column;}
+  .form-note{
+    font-size:0.82rem;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--evergreen-dark);
+    color:#A9C2B2;
+    padding:32px 0;
+    font-size:0.85rem;
+  }
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .reveal.is-visible{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:860px){
+    nav ul{display:none;}
+    .about .wrap{grid-template-columns:1fr;}
+    .about-stats{grid-template-columns:1fr !important;}
+    .contact-grid{grid-template-columns:1fr;}
+    .service-row{grid-template-columns:48px 1fr;}
+    .service-row p{grid-column:2;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">ytkhealth</div>
+    <ul>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">Start a conversation</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-solo">
+    <span class="eyebrow">Physician Recruitment &amp; Network Development</span>
+    <h1>Physician relationships,<br>built to <em>last</em>.</h1>
+    <p class="lede">Helping healthcare organizations of any size recruit, engage, and grow their physician networks — from first outreach to full integration.</p>
+    <div class="btn-row">
+      <a class="btn-primary" href="#contact">Start a conversation</a>
+      <a class="btn-ghost" href="#services">See how it works</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="approach">
+  <div class="wrap">
+    <div class="section-head reveal" style="grid-column:1/-1; margin-bottom:8px;">
+      <span class="section-eyebrow">How I work</span>
+      <h2>Approach</h2>
+    </div>
+    <div class="reveal">
+      <div class="quote-mark">&ldquo;</div>
+      <p style="font-family:'Fraunces',serif; font-size:1.4rem; line-height:1.4; color:var(--ink);">Every strong network starts with one honest conversation.</p>
+      <p class="signature">— Yelena Kotlyar, Founder</p>
+    </div>
+    <div class="about-copy reveal">
+      <p>After a decade leading physician network strategy at two of the country's largest academic health systems, I started ytkhealth to bring that same hands-on approach to organizations that need a <strong>trusted partner, not just a firm</strong> — whether you're a solo practice or a multi-site health system.</p>
+      <p>I sit at the table with physicians and health system leadership alike — translating clinical priorities into business outcomes, through outreach, contracts, and integration built to last.</p>
+    </div>
+    <div class="about-stats reveal" style="grid-column:1/-1; margin-top:16px; padding-top:36px; border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;">
+      <div class="stat">
+        <b>Any scale</b>
+        <span>Solo practice to health system</span>
+      </div>
+      <div class="stat">
+        <b>Full-cycle</b>
+        <span>Recruitment to integration</span>
+      </div>
+      <div class="stat">
+        <b>Direct</b>
+        <span>Hands-on, not delegated</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">What I do</span>
+      <h2>Four ways to grow your network</h2>
+      <p>Flexible engagements — some clients need one piece, others need a partner across the full arc.</p>
+    </div>
+    <div class="services-list">
+      <div class="service-row reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg></div>
+        <h3>Physician Recruitment</h3>
+        <p>Sourcing, vetting, and closing physician candidates who fit your clinical and cultural needs.</p>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="7" cy="8" r="3"/><circle cx="17" cy="16" r="3"/><path d="M9.5 9.5L14.5 14.5"/></svg></div>
+        <h3>Network Development &amp; Outreach</h3>
+        <p>Direct, relationship-first outreach to the physician groups that fit your market — not cold pitches.</p>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+        <h3>Contract Negotiation &amp; Structuring</h3>
+        <p>Employment, professional services, and licensing agreements structured to be fair, compliant, and built to last.</p>
+      </div>
+      <div class="service-row reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 12h6M12 9v6"/></svg></div>
+        <h3>Practice Integration &amp; Onboarding</h3>
+        <p>Single point of contact from signed agreement to day one — coordinating across HR, credentialing, and operations so the relationship, and the momentum, never breaks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section contact" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Get in touch</span>
+      <h2>Let's talk about your network</h2>
+      <p>Tell me what you're working on — I'll follow up soon.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div>
+          <div class="label">Email</div>
+          <a href="mailto:ytkhealth@gmail.com">ytkhealth@gmail.com</a>
+        </div>
+        <div>
+          <div class="label">Phone</div>
+          <a href="tel:6463391259">646-339-1259</a>
+        </div>
+        <div>
+          <div class="label">Availability</div>
+          <span>Remote &amp; on-site engagements</span>
+        </div>
+      </div>
+      <form id="contactForm" reveal="true" class="reveal">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="org">Organization</label>
+          <input type="text" id="org" name="org">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%; text-align:center; border:none;">Send message</button>
+        <p class="form-note">This opens your email client with your message pre-filled.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 ytkhealth. All rights reserved.</span>
+    <span>Physician Recruitment &amp; Network Development</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Contact form -> mailto
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const org = document.getElementById('org').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      const subject = encodeURIComponent('New inquiry from ' + name + (org ? ' (' + org + ')' : ''));
+      const body = encodeURIComponent(message + '\n\n---\nFrom: ' + name + '\nEmail: ' + email + (org ? '\nOrganization: ' + org : ''));
+      window.location.href = 'mailto:ytkhealth@gmail.com?subject=' + subject + '&body=' + body;
+    });
+  }
+</script>
+
+</body>
+</html>
