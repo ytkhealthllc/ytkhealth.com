@@ -1,599 +1,715 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ytkhealth — Physician Recruitment &amp; Network Development</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --canvas:#F5F1E6;
-    --card:#FFFDF8;
-    --ink:#221F1B;
-    --ink-soft:#5B5450;
-    --rosewood:#2B4234;
-    --rosewood-dark:#1D2E24;
-    --evergreen:#2B4234;
-    --evergreen-dark:#1D2E24;
-    --gold:#B8863B;
-    --gold-light:#D4AF6A;
-    --line:#DCD2C0;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ytkhealth — Private Practice Consulting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  *{margin:0;padding:0;box-sizing:border-box;}
+    :root {
+      --cream: #F8F6F1;
+      --white: #FFFFFF;
+      --charcoal: #1C1C1C;
+      --mid: #6B6B6B;
+      --light: #B0ADA6;
+      --accent: #2E5D4B;
+      --accent-light: #EAF0EC;
+      --border: #E4E1DA;
+    }
 
-  html{scroll-behavior:smooth;}
+    html { scroll-behavior: smooth; }
 
-  body{
-    background:var(--canvas);
-    color:var(--ink);
-    font-family:'Karla',sans-serif;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-  h1,h2,h3{
-    font-family:'Fraunces',serif;
-    font-weight:500;
-    letter-spacing:-0.01em;
-    color:var(--ink);
-  }
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 60px;
+      background: rgba(248, 246, 241, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
 
-  a{color:inherit;}
+    nav.scrolled { border-color: var(--border); }
 
-  .wrap{
-    max-width:1120px;
-    margin:0 auto;
-    padding:0 32px;
-  }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
 
-  /* ---------- NAV ---------- */
-  header{
-    position:sticky;
-    top:0;
-    z-index:50;
-    background:rgba(246,241,231,0.88);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  nav.wrap{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding-top:22px;
-    padding-bottom:22px;
-  }
-  .logo{
-    font-family:'Fraunces',serif;
-    font-size:1.3rem;
-    font-weight:600;
-    letter-spacing:-0.01em;
-  }
-  nav ul{
-    display:flex;
-    gap:36px;
-    list-style:none;
-  }
-  nav ul li a{
-    text-decoration:none;
-    font-size:0.95rem;
-    font-weight:500;
-    color:var(--ink-soft);
-    transition:color .2s ease;
-  }
-  nav ul li a:hover{color:var(--rosewood);}
-  .nav-cta{
-    background:var(--evergreen);
-    color:#fff !important;
-    padding:10px 20px;
-    border-radius:999px;
-    font-size:0.9rem;
-    font-weight:600;
-    text-decoration:none;
-    transition:background .2s ease, transform .2s ease;
-  }
-  .nav-cta:hover{background:var(--evergreen-dark);transform:translateY(-1px);}
-  .nav-toggle{display:none;}
+    .logo span { color: var(--accent); }
 
-  /* ---------- HERO ---------- */
-  .hero{
-    padding:110px 0 96px;
-    position:relative;
-    overflow:hidden;
-    background:
-      radial-gradient(ellipse 700px 420px at 82% 8%, rgba(184,134,59,0.10), transparent 60%),
-      radial-gradient(ellipse 600px 500px at 8% 95%, rgba(43,66,52,0.07), transparent 60%);
-  }
-  .hero-solo{
-    max-width:760px;
-    text-align:left;
-  }
-  .hero h1{
-    font-size:clamp(2.8rem, 5.6vw, 4.6rem);
-    line-height:1.06;
-    margin-bottom:26px;
-  }
-  .hero p.lede{
-    font-size:1.22rem;
-    max-width:52ch;
-  }
-  .eyebrow{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-size:0.78rem;
-    font-weight:700;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--gold);
-    margin-bottom:22px;
-  }
-  .eyebrow::before{
-    content:"";
-    width:22px;
-    height:1.5px;
-    background:var(--gold);
-    display:inline-block;
-  }
-  .hero h1{
-    font-size:clamp(2.4rem, 4.2vw, 3.6rem);
-    line-height:1.08;
-    margin-bottom:24px;
-  }
-  .hero h1 em{
-    font-style:italic;
-    color:var(--gold-light);
-  }
-  .hero p.lede{
-    font-size:1.15rem;
-    color:var(--ink-soft);
-    max-width:46ch;
-    margin-bottom:34px;
-  }
-  .btn-row{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
-  .btn-primary{
-    background:var(--rosewood);
-    color:#fff;
-    padding:15px 28px;
-    border-radius:999px;
-    text-decoration:none;
-    font-weight:600;
-    font-size:0.98rem;
-    display:inline-block;
-    transition:background .2s ease, transform .2s ease;
-    border:none;
-    cursor:pointer;
-  }
-  .btn-primary:hover{background:var(--rosewood-dark);transform:translateY(-2px);}
-  .btn-ghost{
-    color:var(--ink);
-    text-decoration:none;
-    font-weight:600;
-    font-size:0.98rem;
-    border-bottom:1.5px solid var(--ink);
-    padding-bottom:2px;
-  }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 40px;
+    }
 
-  /* ---------- SECTION HEADERS ---------- */
-  .section{padding:88px 0;}
-  .section-head{
-    max-width:640px;
-    margin-bottom:56px;
-  }
-  .section-eyebrow{
-    font-size:0.78rem;
-    font-weight:700;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--evergreen);
-    margin-bottom:14px;
-    display:block;
-  }
-  .section-head h2{
-    font-size:clamp(1.8rem,3vw,2.4rem);
-    margin-bottom:16px;
-  }
-  .section-head p{
-    color:var(--ink-soft);
-    font-size:1.05rem;
-  }
+    nav ul a {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--mid);
+      transition: color 0.2s;
+    }
 
-  /* ---------- ABOUT ---------- */
-  .about{
-    background:var(--card);
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    padding:88px 0;
-  }
-  .about .wrap{
-    display:grid;
-    grid-template-columns:0.85fr 1.15fr;
-    gap:64px;
-    align-items:start;
-  }
-  .quote-mark{
-    font-family:'Fraunces',serif;
-    font-size:5rem;
-    color:var(--gold);
-    line-height:1;
-    margin-bottom:8px;
-  }
-  .about-copy p{
-    font-size:1.08rem;
-    color:var(--ink-soft);
-    margin-bottom:20px;
-  }
-  .about-copy p:last-child{margin-bottom:0;}
-  .about-copy strong{color:var(--ink);font-weight:600;}
-  .signature{
-    margin-top:28px;
-    font-family:'Fraunces',serif;
-    font-style:italic;
-    font-size:1.2rem;
-    color:var(--ink);
-  }
-  .about-stats{
-    display:flex;
-    flex-direction:column;
-    gap:26px;
-  }
-  .stat{
-    border-left:2px solid var(--gold);
-    padding-left:18px;
-  }
-  .stat b{
-    display:block;
-    font-family:'Fraunces',serif;
-    font-size:1.5rem;
-    font-weight:500;
-    color:var(--evergreen);
-  }
-  .stat span{
-    font-size:0.9rem;
-    color:var(--ink-soft);
-  }
+    nav ul a:hover { color: var(--charcoal); }
 
-  /* ---------- ABOUT ME (minimal) ---------- */
-  .about-me{
-    text-align:center;
-  }
-  .about-me .wrap{
-    max-width:640px;
-  }
-  .monogram{
-    width:56px;
-    height:56px;
-    border-radius:50%;
-    background:var(--evergreen);
-    color:#F5F1E6;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:'Fraunces',serif;
-    font-size:1.1rem;
-    font-weight:600;
-    margin:0 auto 24px;
-  }
-  .about-me p{
-    font-size:1.1rem;
-    color:var(--ink-soft);
-  }
-  .about-me .signature{
-    justify-content:center;
-    display:flex;
-    margin-top:20px;
-  }
+    .nav-cta {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--white) !important;
+      background: var(--accent);
+      padding: 10px 22px;
+      border-radius: 2px;
+      text-decoration: none;
+      text-transform: none !important;
+      transition: opacity 0.2s !important;
+    }
 
-  /* ---------- SERVICES ---------- */
-  .services-list{
-    display:flex;
-    flex-direction:column;
-  }
-  .service-row{
-    display:grid;
-    grid-template-columns:64px 1fr 1.3fr;
-    gap:32px;
-    padding:34px 0;
-    border-top:1px solid var(--line);
-    align-items:start;
-  }
-  .service-row:last-child{border-bottom:1px solid var(--line);}
-  .service-icon{
-    width:48px;height:48px;
-    border-radius:50%;
-    background:var(--card);
-    border:1.5px solid var(--evergreen);
-    display:flex;align-items:center;justify-content:center;
-  }
-  .service-icon svg{width:22px;height:22px;stroke:var(--evergreen);}
-  .service-row h3{
-    font-size:1.25rem;
-    font-weight:500;
-    padding-top:6px;
-  }
-  .service-row p{
-    color:var(--ink-soft);
-    padding-top:6px;
-  }
+    .nav-cta:hover { opacity: 0.85; }
 
-  /* ---------- CONTACT ---------- */
-  .contact{
-    background:var(--evergreen);
-    color:#F6F1E7;
-    position:relative;
-  }
-  .contact .section-head p{color:#CFE0D5;}
-  .contact .section-eyebrow{color:var(--gold);}
-  .contact h2{color:#fff;}
-  .contact-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:56px;
-    align-items:start;
-  }
-  .contact-info{display:flex;flex-direction:column;gap:22px;}
-  .contact-info a{
-    text-decoration:none;
-    font-weight:600;
-    border-bottom:1.5px solid rgba(255,255,255,0.4);
-    padding-bottom:2px;
-    width:fit-content;
-  }
-  .contact-info .label{
-    font-size:0.8rem;
-    text-transform:uppercase;
-    letter-spacing:0.08em;
-    color:#A9C2B2;
-    margin-bottom:6px;
-  }
-  form{
-    background:var(--card);
-    border-radius:16px;
-    padding:32px;
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-  }
-  form label{
-    font-size:0.85rem;
-    font-weight:600;
-    color:var(--ink);
-    margin-bottom:6px;
-    display:block;
-  }
-  form input, form textarea{
-    width:100%;
-    border:1.5px solid var(--line);
-    border-radius:8px;
-    padding:12px 14px;
-    font-family:'Karla',sans-serif;
-    font-size:0.95rem;
-    color:var(--ink);
-    background:#fff;
-    transition:border-color .2s ease;
-  }
-  form input:focus, form textarea:focus{
-    outline:none;
-    border-color:var(--evergreen);
-  }
-  form textarea{resize:vertical;min-height:100px;}
-  .field{display:flex;flex-direction:column;}
-  .form-note{
-    font-size:0.82rem;
-    color:var(--ink-soft);
-  }
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 140px 60px 80px;
+      position: relative;
+      overflow: hidden;
+    }
 
-  /* ---------- FOOTER ---------- */
-  footer{
-    background:var(--evergreen-dark);
-    color:#A9C2B2;
-    padding:32px 0;
-    font-size:0.85rem;
-  }
-  footer .wrap{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:12px;
-  }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      width: 55%;
+      height: 110%;
+      background: var(--accent-light);
+      border-radius: 4px;
+      z-index: 0;
+      opacity: 0.6;
+    }
 
-  /* ---------- REVEAL ---------- */
-  .reveal{
-    opacity:0;
-    transform:translateY(16px);
-    transition:opacity .6s ease, transform .6s ease;
-  }
-  .reveal.is-visible{opacity:1;transform:translateY(0);}
-  @media (prefers-reduced-motion: reduce){
-    .reveal{opacity:1;transform:none;transition:none;}
-  }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      animation: fadeUp 0.9s ease both;
+    }
 
-  /* ---------- RESPONSIVE ---------- */
-  @media (max-width:860px){
-    nav ul{display:none;}
-    .about .wrap{grid-template-columns:1fr;}
-    .about-stats{grid-template-columns:1fr !important;}
-    .contact-grid{grid-template-columns:1fr;}
-    .service-row{grid-template-columns:48px 1fr;}
-    .service-row p{grid-column:2;}
-  }
-</style>
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 6vw, 78px);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+      color: var(--charcoal);
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--mid);
+      line-height: 1.7;
+      max-width: 500px;
+      margin-bottom: 48px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: 2px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.85; }
+
+    .btn-ghost {
+      color: var(--charcoal);
+      font-size: 14px;
+      font-weight: 400;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.2s;
+    }
+
+    .btn-ghost:hover { gap: 14px; }
+
+    /* TRUST BAR */
+    .trust {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      overflow-x: auto;
+    }
+
+    .trust-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--light);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .trust-items {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--mid);
+      white-space: nowrap;
+    }
+
+    /* SERVICES */
+    .section {
+      padding: 120px 60px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 72px;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 54px);
+      font-weight: 300;
+      line-height: 1.12;
+      color: var(--charcoal);
+    }
+
+    h2 em { font-style: italic; color: var(--accent); }
+
+    .section-note {
+      font-size: 14px;
+      color: var(--mid);
+      max-width: 300px;
+      line-height: 1.6;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 48px 40px;
+      transition: background 0.25s;
+      cursor: default;
+    }
+
+    .service-card:hover { background: var(--accent-light); }
+
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--light);
+      margin-bottom: 32px;
+      letter-spacing: 0.04em;
+    }
+
+    .service-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 24px;
+      color: var(--accent);
+    }
+
+    h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 14px;
+      color: var(--charcoal);
+    }
+
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    /* HOW IT WORKS */
+    .how-bg {
+      background: var(--charcoal);
+      color: var(--white);
+    }
+
+    .how-bg h2 { color: var(--white); }
+    .how-bg .eyebrow { color: #7FA98F; }
+    .how-bg .eyebrow::before { background: #7FA98F; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-top: 72px;
+    }
+
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.08);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+    }
+
+    /* WHY */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .why-text h2 { margin-bottom: 24px; }
+
+    .why-text p {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--mid);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 48px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+    }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--mid);
+      margin-top: 6px;
+      font-weight: 300;
+    }
+
+    .why-visual {
+      background: var(--accent-light);
+      border-radius: 4px;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .quote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      line-height: 0.5;
+      color: var(--accent);
+      opacity: 0.3;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--charcoal);
+    }
+
+    .quote-attr {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--mid);
+      letter-spacing: 0.04em;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: var(--accent);
+      padding: 120px 60px;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      color: var(--white);
+      margin-bottom: 20px;
+      font-size: clamp(36px, 4vw, 56px);
+    }
+
+    .cta-section p {
+      color: rgba(255,255,255,0.7);
+      font-size: 17px;
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--accent);
+      padding: 18px 44px;
+      border-radius: 2px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s;
+    }
+
+    .btn-white:hover { opacity: 0.9; }
+
+    /* FOOTER */
+    footer {
+      background: var(--charcoal);
+      padding: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    footer .logo { color: var(--white); font-size: 20px; }
+    footer .logo span { color: #7FA98F; }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 20px 24px; }
+      nav ul { display: none; }
+      .hero { padding: 120px 24px 60px; }
+      .hero::before { display: none; }
+      .section { padding: 80px 24px; }
+      .services-grid { grid-template-columns: 1fr; gap: 2px; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .trust { padding: 24px; }
+      footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+      .cta-section { padding: 80px 24px; }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <nav class="wrap">
-    <div class="logo">ytkhealth</div>
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="logo">ytk<span>health</span></a>
     <ul>
-      <li><a href="#approach">Approach</a></li>
-      <li><a href="about.html">About</a></li>
       <li><a href="#services">Services</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#how">Process</a></li>
+      <li><a href="#why">About</a></li>
+      <li><a href="#contact" class="nav-cta">Book a Call</a></li>
     </ul>
-    <a class="nav-cta" href="#contact">Start a conversation</a>
   </nav>
-</header>
 
-<section class="hero">
-  <div class="wrap hero-solo">
-    <span class="eyebrow">Physician Recruitment &amp; Network Development</span>
-    <h1>Physician relationships,<br>built to <em>last</em>.</h1>
-    <p class="lede">Helping healthcare organizations of any size recruit, engage, and grow their physician networks — from first outreach to full integration.</p>
-    <div class="btn-row">
-      <a class="btn-primary" href="#contact">Start a conversation</a>
-      <a class="btn-ghost" href="#services">See how it works</a>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow">Healthcare Practice Consulting</div>
+      <h1>Grow your practice.<br><em>Reach your patients.</em><br>Own your future.</h1>
+      <p class="hero-sub">We specialize in helping physicians build and grow concierge and private-pay practices — with expert guidance on outreach, business development, contracts, and everything in between.</p>
+      <div class="btn-row">
+        <a href="#contact" class="btn-primary">Book a Free Consultation</a>
+        <a href="#services" class="btn-ghost">See how we help &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust">
+    <span class="trust-label">We advise on</span>
+    <div class="trust-items">
+      <span class="trust-item">Business Growth</span>
+      <span class="trust-item">Patient Outreach</span>
+      <span class="trust-item">Concierge Medicine</span>
+      <span class="trust-item">Private Pay Models</span>
+      <span class="trust-item">Contract Negotiation</span>
+      <span class="trust-item">Practice Formation</span>
     </div>
   </div>
-</section>
 
-<section class="about" id="approach">
-  <div class="wrap">
-    <div class="section-head reveal" style="grid-column:1/-1; margin-bottom:8px;">
-      <span class="section-eyebrow">How I work</span>
-      <h2>Approach</h2>
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="section-header reveal">
+      <h2>Everything you need<br>to <em>launch & grow</em></h2>
+      <p class="section-note">From your first consultation to a fully operating independent practice, we're with you at every step.</p>
     </div>
-    <div class="reveal">
-      <div class="quote-mark">&ldquo;</div>
-      <p style="font-family:'Fraunces',serif; font-size:1.4rem; line-height:1.4; color:var(--ink);">Every strong network starts with one honest conversation.</p>
-      <p class="signature">— Yelena Kotlyar, Founder</p>
-    </div>
-    <div class="about-copy reveal">
-      <p>After a decade leading physician network strategy at two of the country's largest academic health systems, I started ytkhealth to bring that same hands-on approach to organizations that need a <strong>trusted partner, not just a firm</strong> — whether you're a solo practice or a multi-site health system.</p>
-      <p>I sit at the table with physicians and health system leadership alike — translating clinical priorities into business outcomes, through outreach, contracts, and integration built to last.</p>
-    </div>
-    <div class="about-stats reveal" style="grid-column:1/-1; margin-top:16px; padding-top:36px; border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;">
-      <div class="stat">
-        <b>Any scale</b>
-        <span>Solo practice to health system</span>
-      </div>
-      <div class="stat">
-        <b>Full-cycle</b>
-        <span>Recruitment to integration</span>
-      </div>
-      <div class="stat">
-        <b>Direct</b>
-        <span>Hands-on, not delegated</span>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="services-grid">
 
-<section class="section" id="services">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="section-eyebrow">What I do</span>
-      <h2>Four ways to grow your network</h2>
-      <p>Flexible engagements — some clients need one piece, others need a partner across the full arc.</p>
-    </div>
-    <div class="services-list">
-      <div class="service-row reveal">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg></div>
-        <h3>Physician Recruitment</h3>
-        <p>Sourcing, vetting, and closing physician candidates who fit your clinical and cultural needs.</p>
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        <h3>Practice Formation & Structure</h3>
+        <p class="service-desc">Entity selection, business planning, and operational setup for your independent practice — built to support your clinical model and financial goals.</p>
       </div>
-      <div class="service-row reveal">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="7" cy="8" r="3"/><circle cx="17" cy="16" r="3"/><path d="M9.5 9.5L14.5 14.5"/></svg></div>
-        <h3>Network Development &amp; Outreach</h3>
-        <p>Direct, relationship-first outreach to the physician groups that fit your market — not cold pitches.</p>
-      </div>
-      <div class="service-row reveal">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
-        <h3>Contract Negotiation &amp; Structuring</h3>
-        <p>Employment, professional services, and licensing agreements structured to be fair, compliant, and built to last.</p>
-      </div>
-      <div class="service-row reveal">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 12h6M12 9v6"/></svg></div>
-        <h3>Practice Integration &amp; Onboarding</h3>
-        <p>Single point of contact from signed agreement to day one — coordinating across HR, credentialing, and operations so the relationship, and the momentum, never breaks.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="section contact" id="contact">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="section-eyebrow">Get in touch</span>
-      <h2>Let's talk about your network</h2>
-      <p>Tell me what you're working on — I'll follow up soon.</p>
+      <div class="service-card reveal">
+        <div class="service-num">02</div>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <h3>Concierge & Private Pay Modeling</h3>
+        <p class="service-desc">Design a membership fee structure, patient capacity, and revenue model that lets you practice medicine the way you trained to — without insurance friction.</p>
+      </div>
+
+      <div class="service-card reveal" style="border-top: 3px solid var(--accent);">
+        <div class="service-num">03 — Core Specialty</div>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <h3>Business Growth & Patient Outreach</h3>
+        <p class="service-desc">This is where we shine. We build tailored outreach strategies that attract and retain the right patients for your model — referral networks, community presence, digital visibility, and direct-to-patient messaging that actually converts. Growth isn't luck; it's a system.</p>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-num">04</div>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <h3>Regulatory & Compliance Guidance</h3>
+        <p class="service-desc">Navigate DPC rules, state regulations, and insurance opt-out procedures with confidence. We help you stay compliant from day one.</p>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-num">05</div>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <h3>Ongoing Advisory & Mentorship</h3>
+        <p class="service-desc">Retainer-based support for physicians who want a trusted advisor in their corner — for decisions big and small as their practice evolves.</p>
+      </div>
+
     </div>
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <div>
-          <div class="label">Email</div>
-          <a href="mailto:ytkhealth@gmail.com">ytkhealth@gmail.com</a>
-        </div>
-        <div>
-          <div class="label">Phone</div>
-          <a href="tel:6463391259">646-339-1259</a>
-        </div>
-        <div>
-          <div class="label">Availability</div>
-          <span>Remote &amp; on-site engagements</span>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section how-bg" id="how">
+    <div class="eyebrow reveal">Our Process</div>
+    <h2 class="reveal">From idea to <em>open doors</em></h2>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Discovery Call</div>
+        <p class="step-desc">We learn about your background, your vision for practice, and where you are in the journey — no obligation, just clarity.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-title">Strategy Session</div>
+        <p class="step-desc">A deep-dive into your clinical model, financial goals, market, and constraints. We map out your path together.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-title">Build & Execute</div>
+        <p class="step-desc">We help you implement — from entity formation and contract review to patient acquisition systems and compliance.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <div class="step-title">Grow & Sustain</div>
+        <p class="step-desc">Ongoing support as your practice scales, with strategic guidance at every inflection point.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="section" id="why">
+    <div class="why-grid">
+      <div class="why-text reveal">
+        <div class="eyebrow">Why Ytkhealth</div>
+        <h2>Consulting built for <em>physicians</em>, not administrators</h2>
+        <p>Physicians are trained to heal — not to negotiate contracts, structure LLCs, or build patient acquisition funnels. Most consultants don't understand the unique world of medical practice. We do.</p>
+        <p>Our core specialty is <strong>business growth and outreach</strong> — helping you attract the right patients, build referral networks, and create sustainable momentum for your practice. We pair that with full-service support across contracts, compliance, and practice formation.</p>
+        <div class="stat-row">
+          <div>
+            <div class="stat-num">100%</div>
+            <div class="stat-label">physician-focused</div>
+          </div>
+          <div>
+            <div class="stat-num">DPC</div>
+            <div class="stat-label">& concierge specialists</div>
+          </div>
+          <div>
+            <div class="stat-num">End‑to‑end</div>
+            <div class="stat-label">from idea to open</div>
+          </div>
         </div>
       </div>
-      <form id="contactForm" reveal="true" class="reveal">
-        <div class="field">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-        <div class="field">
-          <label for="org">Organization</label>
-          <input type="text" id="org" name="org">
-        </div>
-        <div class="field">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="field">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" required></textarea>
-        </div>
-        <button type="submit" class="btn-primary" style="width:100%; text-align:center; border:none;">Send message</button>
-        <p class="form-note">This opens your email client with your message pre-filled.</p>
-      </form>
+      <div class="why-visual reveal">
+        <div class="quote-mark">&ldquo;</div>
+        <p class="quote-text">I finally felt like someone understood what I was trying to build — and knew exactly how to help me get there.</p>
+        <p class="quote-attr">— Ytkhealth Client, Internal Medicine Physician</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <div class="wrap">
-    <span>© 2026 ytkhealth. All rights reserved.</span>
-    <span>Physician Recruitment &amp; Network Development</span>
-  </div>
-</footer>
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <h2>Ready to build your <em style="font-style:italic; color:rgba(255,255,255,0.7)">own practice?</em></h2>
+    <p>Schedule a free 30-minute consultation. No pressure, no pitch — just an honest conversation about your path forward.</p>
+    <a href="mailto:hello@ytkhealth.com" class="btn-white">Book Your Free Call</a>
+    <p style="margin-top:24px; color:rgba(255,255,255,0.6); font-size:15px;">Or call us: <a href="tel:9177195980" style="color:rgba(255,255,255,0.85); text-decoration:none;">(917) 719-5980</a></p>
+  </section>
 
-<script>
-  // Scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        io.unobserve(entry.target);
-      }
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="logo">ytk<span>health</span></a>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#how">Process</a>
+      <a href="#why">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <p class="footer-copy"><a href="tel:9177195980" style="color:rgba(255,255,255,0.4); text-decoration:none; margin-right:16px;">(917) 719-5980</a>&copy; 2026 Ytkhealth. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Nav scroll state
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
     });
-  }, { threshold: 0.15 });
-  revealEls.forEach(el => io.observe(el));
 
-  // Contact form -> mailto
-  const contactForm = document.getElementById('contactForm');
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e){
-      e.preventDefault();
-      const name = document.getElementById('name').value;
-      const org = document.getElementById('org').value;
-      const email = document.getElementById('email').value;
-      const message = document.getElementById('message').value;
-      const subject = encodeURIComponent('New inquiry from ' + name + (org ? ' (' + org + ')' : ''));
-      const body = encodeURIComponent(message + '\n\n---\nFrom: ' + name + '\nEmail: ' + email + (org ? '\nOrganization: ' + org : ''));
-      window.location.href = 'mailto:ytkhealth@gmail.com?subject=' + subject + '&body=' + body;
-    });
-  }
-</script>
-
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
